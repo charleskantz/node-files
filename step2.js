@@ -21,6 +21,10 @@ function cat(path) {
 
 function webCat(url) {
   axios.get(url).then(function(resp) {
-    console.log(resp.data);
-  });
+    console.log("this is our response data", resp.data);
+  })
+  .catch(function(e){
+    console.log("unable  to fetch URL!");
+    process.exit(1);
+  })
 }
