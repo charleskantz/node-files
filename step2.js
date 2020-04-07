@@ -1,11 +1,13 @@
 const fs = require('fs');
 const axios = require('axios');
 
-if( process.argv[2].includes('http') ){
-  let url = process.argv[2]
+let processArg = process.argv[2]
+
+if( processArg.startsWith('http://') ){
+  let url = processArg
   webCat(url);
 } else {
-  let path = process.argv[2];
+  let path = processArg;
   cat(path);
 }
 
@@ -19,12 +21,13 @@ function cat(path) {
   });
 }
 
-function webCat(url) {
-  axios.get(url).then(function(resp) {
-    console.log("this is our response data", resp.data);
-  })
-  .catch(function(e){
+async function webCat(url) {
+  try{
+    let response = await axios.get(url)
+    console.log("this is our response data", response.data);
+
+  }catch(error){
     console.log("unable  to fetch URL!");
     process.exit(1);
-  })
+  }
 }
